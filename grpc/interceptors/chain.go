@@ -11,6 +11,10 @@ import (
 
 type InterceptorsChain []connect.Interceptor
 
+const (
+	DefaultTimeout = 10 * time.Second
+)
+
 func ServerDefaultChain() InterceptorsChain {
 	return []connect.Interceptor{
 		recover.RecoverInterceptor(),

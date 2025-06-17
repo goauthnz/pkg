@@ -8,7 +8,7 @@ import (
 )
 
 // TranslateError translates an error to an HTTP status code and a response.
-func TranslateError(ctx context.Context, err error) (int, interface{}) {
+func TranslateError(ctx context.Context, err error) (int, any) {
 	switch {
 	case pkgerrors.IsNotFoundError(err):
 		return http.StatusNotFound, NewHTTPResponse(http.StatusNotFound, err.Error(), nil)

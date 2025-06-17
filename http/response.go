@@ -23,13 +23,13 @@ type HTTPResponseStatus struct {
 // HTTPResponse is the response skeleton for all HTTP responses.
 type HTTPResponse struct {
 	Status HTTPResponseStatus `json:"status"`
-	Data   interface{}        `json:"data"`
+	Data   any                `json:"data"`
 }
 
 // NewHTTPResponse is a helper function to create a new HTTPResponse.
 // It will set the status code, message and data.
 // It will also set the error to true if the status code is not 200, 201, 204 or 202.
-func NewHTTPResponse(statusCode int, message string, data interface{}) HTTPResponse {
+func NewHTTPResponse(statusCode int, message string, data any) HTTPResponse {
 	resp := HTTPResponse{
 		Status: HTTPResponseStatus{
 			Code:    statusCode,
