@@ -9,19 +9,19 @@ import (
 	"github.com/goauthnz/pkg/grpc/interceptors/timeout"
 )
 
-type InterceptorsChain []connect.Interceptor
+type Interceptors []connect.Interceptor
 
 const (
 	DefaultTimeout = 10 * time.Second
 )
 
-func ServerDefaultChain() InterceptorsChain {
+func ServerDefaultInterceptors() Interceptors {
 	return []connect.Interceptor{
 		recover.RecoverInterceptor(),
 	}
 }
 
-func ClientDefaultChain(t time.Duration) InterceptorsChain {
+func ClientDefaultInterceptors(t time.Duration) Interceptors {
 	return []connect.Interceptor{
 		timeout.TimeoutInterceptor(t),
 		logger.ClientLoggerInterceptor(),

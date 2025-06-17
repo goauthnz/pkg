@@ -13,6 +13,7 @@ func TimeoutInterceptor(timeout time.Duration) connect.UnaryInterceptorFunc {
 		return connect.UnaryFunc(func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
 			ctx, cancel := context.WithTimeout(ctx, timeout)
 			defer cancel()
+
 			return next(ctx, req)
 		})
 	}

@@ -9,7 +9,10 @@ import (
 )
 
 // ClientLoggerInterceptor is a gRPC interceptor that logs the request and response of a gRPC call.
-// It will log based on the log level defined in the application.
+// It will log all important information, including the error if any.
+// The level of the log is based on the error if any.
+// For all non-error logs, it will use the debug level.
+// For all error logs, it will use the error level.
 func ClientLoggerInterceptor() connect.UnaryInterceptorFunc {
 	iceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
 		return connect.UnaryFunc(func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
