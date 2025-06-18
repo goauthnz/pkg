@@ -26,9 +26,6 @@ const (
 	ResetPassword DataPrefix = "rpsw_"
 	VerifyEmail   DataPrefix = "veml_"
 	VerifyPhone   DataPrefix = "vphn_"
-
-	// user related prefixes
-	User DataPrefix = "user_"
 )
 
 // String returns the string representation of the DataPrefix.
