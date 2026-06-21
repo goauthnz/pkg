@@ -7,7 +7,7 @@ import (
 	"github.com/goauthnz/pkg/errors"
 )
 
-// TranslateFromGRPCError translates an error from a gRPC service to a errors.
+// TranslateFromGRPCError translates an error from a gRPC service to an error.
 // If no error is passed, it returns nil.
 func TranslateFromGRPCError(_ context.Context, err error) error {
 	// check if error is nil
@@ -22,6 +22,12 @@ func TranslateFromGRPCError(_ context.Context, err error) error {
 		return errors.NewResourceAlreadyCreatedError(err.Error())
 	case connectgo.CodeInvalidArgument:
 		return errors.NewBadRequestError(err.Error())
+	case connectgo.CodeUnauthenticated:
+		return errors.NewUnauthorizedError(err.Error())
+	case connectgo.CodeFailedPrecondition:
+		return errors.NewExpiredResourceError(err.Error())
+	case connectgo.CodeAborted:
+		return errors.NewOutdatedResourceError(err.Error())
 	case connectgo.CodeInternal:
 		return errors.NewInternalServerError(err.Error())
 	default:
@@ -43,6 +49,12 @@ func TranslateToGRPCError(_ context.Context, err error) error {
 		return connectgo.NewError(connectgo.CodeAlreadyExists, err)
 	case errors.IsBadRequestError(err):
 		return connectgo.NewError(connectgo.CodeInvalidArgument, err)
+	case errors.IsUnauthorizedError(err):
+		return connectgo.NewError(connectgo.CodeUnauthenticated, err)
+	case errors.IsExpiredResourceError(err):
+		return connectgo.NewError(connectgo.CodeFailedPrecondition, err)
+	case errors.IsOutdatedResourceError(err):
+		return connectgo.NewError(connectgo.CodeAborted, err)
 	case errors.IsInternalServerError(err):
 		return connectgo.NewError(connectgo.CodeInternal, err)
 	default:

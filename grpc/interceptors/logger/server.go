@@ -8,12 +8,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// ClientLoggerInterceptor is a gRPC interceptor that logs the request and response of a gRPC call.
-// It will log all important information, including the error if any.
-// The level of the log is based on the error if any.
-// For all non-error logs, it will use the debug level.
-// For all error logs, it will use the error level.
-func ClientLoggerInterceptor() connect.UnaryInterceptorFunc {
+// ServerLoggerInterceptor is a gRPC interceptor that logs inbound requests on the server side.
+func ServerLoggerInterceptor() connect.UnaryInterceptorFunc {
 	interceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
 		return connect.UnaryFunc(func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
 			startTime := time.Now().UTC()
@@ -35,7 +31,7 @@ func ClientLoggerInterceptor() connect.UnaryInterceptorFunc {
 				Str("method", req.Spec().Procedure).
 				Str("status", status).
 				Dur("duration", requestDuration).
-				Msg("sent a grpc call")
+				Msg("received a grpc call")
 
 			return resp, err
 		})

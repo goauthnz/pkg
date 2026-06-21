@@ -18,6 +18,7 @@ const (
 func ServerDefaultInterceptors() Interceptors {
 	return []connect.Interceptor{
 		recover.RecoverInterceptor(),
+		logger.ServerLoggerInterceptor(),
 	}
 }
 

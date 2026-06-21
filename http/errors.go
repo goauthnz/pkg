@@ -18,6 +18,10 @@ func TranslateError(ctx context.Context, err error) (int, any) {
 		return http.StatusBadRequest, NewHTTPResponse(http.StatusBadRequest, err.Error(), nil)
 	case pkgerrors.IsUnauthorizedError(err):
 		return http.StatusUnauthorized, NewHTTPResponse(http.StatusUnauthorized, err.Error(), nil)
+	case pkgerrors.IsExpiredResourceError(err):
+		return http.StatusGone, NewHTTPResponse(http.StatusGone, err.Error(), nil)
+	case pkgerrors.IsOutdatedResourceError(err):
+		return http.StatusConflict, NewHTTPResponse(http.StatusConflict, err.Error(), nil)
 	default:
 		return http.StatusInternalServerError, NewHTTPResponse(http.StatusInternalServerError, MessageInternalServerError, nil)
 	}
