@@ -63,7 +63,7 @@ func NewExpiredResourceError(key string) error {
 	})
 }
 
-// ExpiresResourceError is used when the given resource has expired
+// ExpiredResourceError is used when the given resource has expired
 type ExpiredResourceError struct {
 	ErrorWithKey
 }
@@ -97,7 +97,7 @@ func IsInternalServerError(err error) bool {
 }
 
 // NewUnauthorizedError return a new UnauthorizedError
-func NewUnauthorizedError(key string, subjectAndMessage ...string) error {
+func NewUnauthorizedError(key string) error {
 	return errors.WithStack(&UnauthorizedError{
 		ErrorWithKey: ErrorWithKey{key},
 	})
@@ -145,12 +145,12 @@ func NewOutdatedResourceError(key string) error {
 	})
 }
 
-// ResourceAlreadyCreatedError is used when a resource already exist and could not be created another time
+// OutdatedResourceError is used when a resource has been updated and the current version is outdated
 type OutdatedResourceError struct {
 	ErrorWithKey
 }
 
-// IsResourceAlreadyCreatedError verify if an error is a ResourceAlreadyCreatedError
+// IsOutdatedResourceError verify if an error is a OutdatedResourceError
 func IsOutdatedResourceError(err error) bool {
 	_, ok := errors.Cause(err).(*OutdatedResourceError)
 

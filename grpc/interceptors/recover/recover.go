@@ -20,7 +20,7 @@ func (e *PanicError) Error() string {
 
 // RecoverInterceptor recovers from panics and returns an error.
 func RecoverInterceptor() connect.UnaryInterceptorFunc {
-	iceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
+	interceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
 		return connect.UnaryFunc(func(ctx context.Context, req connect.AnyRequest) (_ connect.AnyResponse, err error) {
 			defer func() {
 				if r := recover(); r != nil {
@@ -32,7 +32,7 @@ func RecoverInterceptor() connect.UnaryInterceptorFunc {
 			return next(ctx, req)
 		})
 	}
-	return connect.UnaryInterceptorFunc(iceptor)
+	return connect.UnaryInterceptorFunc(interceptor)
 }
 
 func recoverFrom(_ context.Context, p any) error {

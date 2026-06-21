@@ -4,14 +4,14 @@ import "net/http"
 
 const (
 	MessageSuccess                 = "SUCCESS"
-	MessageBindError               = "MALFORMATED_PARAMETERS_ERROR"
+	MessageBindError               = "MALFORMED_PARAMETERS_ERROR"
 	MessageValidationError         = "INVALID_PARAMETERS_ERROR"
 	MessageInternalServerError     = "INTERNAL_SERVER_ERROR"
 	MessageUserAlreadyCreatedError = "CONFLICT_ALREADY_EXIST_ERROR"
 	MessageBadRequestError         = "BAD_REQUEST_ERROR"
 	MessageNotFoundError           = "NOT_FOUND_ERROR"
 	MessageUnauthorizedError       = "UNAUTHORIZED_ERROR"
-	MessageForbidenError           = "FORBIDEN_ERROR"
+	MessageForbiddenError          = "FORBIDDEN_ERROR"
 )
 
 type HTTPResponseStatus struct {
@@ -28,7 +28,7 @@ type HTTPResponse struct {
 
 // NewHTTPResponse is a helper function to create a new HTTPResponse.
 // It will set the status code, message and data.
-// It will also set the error to true if the status code is not 200, 201, 204 or 202.
+// It will also set the error to true if the status code is not 200, 201, 202 or 204.
 func NewHTTPResponse(statusCode int, message string, data any) HTTPResponse {
 	resp := HTTPResponse{
 		Status: HTTPResponseStatus{
